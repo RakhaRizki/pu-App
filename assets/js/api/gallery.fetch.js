@@ -22,7 +22,7 @@ async function fetchGallery(category = null) {
     try {
         let url = `${API_BASE_URL}/gallery`;
         if (category && category !== "all") {
-            url += `?category=${category}`;
+            url += `/by-category?category=${category}`;
         }
 
         const response = await fetch(url);
