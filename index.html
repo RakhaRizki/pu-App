@@ -7,125 +7,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Tailwind -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
+    <!-- Sweet Alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-            /* Smooth scrolling saat klik anchor link */
-        }
-
-        /* Warna bullet pagination */
-        .swiper-pagination-bullet {
-            background-color: #FFA500 !important;
-            /* Warna orange */
-            opacity: 0.5;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        /* Warna bullet pagination yang aktif */
-        .swiper-pagination-bullet-active {
-            background-color: #FF8C00 !important;
-            /* Warna orange yang lebih gelap */
-            opacity: 1;
-            transform: scale(1.2);
-        }
-
-        /* Efek hover untuk tombol */
-        button,
-        .btn {
-            transition: all 0.3s ease-in-out;
-        }
-
-        button:hover,
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Animasi smooth untuk elemen yang muncul saat scroll */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .fade-in.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Smooth hover effect untuk card */
-        .card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Smooth scrolling untuk navbar */
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-
-    <!-- navbar -->
-
-    <nav class="bg-white shadow-lg py-3">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-md transition duration-300 ease-in-out py-2">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center">
                 <!-- Logo -->
                 <div>
-                    <a href="/" class="flex items-center py-4 px-2">
-                        <img src="images/logo.png" alt="Logo" class="h-10 w-40 mr-2">
+                    <a href="/" class="flex items-center py-2 px-2 group">
+                        <img src="images/logo.png" alt="Logo" class="h-10 w-40 mr-2 transition-transform duration-300 group-hover:scale-105">
                     </a>
                 </div>
 
-                <!-- Navbar Links (Desktop) -->
-                <div class="hidden lg:flex flex-1 justify-center space-x-4">
-                    <a href="/"
-                        class="px-4 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Beranda</a>
-                    <a href="#produk"
-                        class="px-4 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Produk</a>
-                    <a href="#tentang"
-                        class="px-4 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Tentang</a>
-                    <a href="#galeri"
-                        class="px-4 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Galeri</a>
-                    <a href="#travel"
-                        class="px-4 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Travel</a>
-                </div>
-
-                <!-- CTA -->
-                <div class="flex items-center space-x-6">
-
-                    <!-- CTA -->
-                    <a href="#"
-                        class="hidden lg:block px-4 py-3 bg-orange-500 text-white rounded-lg font-semibold text-sm hover:bg-orange-600 transition duration-300">
-                        Konsultasi Sekarang
+                <!-- CTA & Auth -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://wa.me/62811917988/?text=Assalamu’alaikum. Saya ingin berkonsultasi dan menanyakan informasi lebih lanjut mengenai agen yang menangani layanan/produk ini. Mohon bantuannya. Terima kasih."
+                        class="cta-btn hidden lg:block px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white rounded-lg font-semibold text-sm shadow hover:from-orange-600 hover:to-yellow-500 transition duration-300">
+                            Hubungi Kami
                     </a>
-
+                    <!-- Tambahkan di dalam .flex.items-center di navbar -->
+                    <span id="navbar-profile-name" class="hidden lg:inline-block font-semibold text-orange-600 cursor-pointer hover:underline ml-4"></span>
+                    <button id="logout-btn"
+                        class="hidden lg:inline-block ml-1 p-2 bg-gray-100 text-orange-600 rounded-full hover:bg-orange-500 hover:text-white transition duration-300 shadow"
+                        title="Logout">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+                        </svg>
+                    </button>
                     <!-- Mobile Menu Button -->
                     <div class="lg:hidden flex items-center">
                         <button class="outline-none mobile-menu-button">
-                            <svg class="w-6 h-6 text-gray-700 hover:text-orange-500 transition-transform duration-300 ease-in-out"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            <svg class="menu-icon w-7 h-7 text-orange-500 transition duration-300" fill="none
+                                " stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="6" width="16" height="2" rx="1" fill="currentColor"/>
+                                <rect x="4" y="11" width="16" height="2" rx="1" fill="currentColor"/>
+                                <rect x="4" y="16" width="16" height="2" rx="1" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
@@ -135,121 +65,80 @@
 
         <!-- Mobile Menu -->
         <div
-            class="hidden mobile-menu bg-white shadow-md transition-all duration-500 ease-in-out transform scale-95 opacity-0 -translate-y-5">
-            <div class="flex flex-col space-y-3 py-4 px-6 text-left">
-                <a href="/"
-                    class="block py-2 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Beranda</a>
-                <a href="#produk"
-                    class="block py-2 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Produk</a>
-                <a href="#tentang"
-                    class="block py-2 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Tentang</a>
-                <a href="#galeri"
-                    class="block py-2 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Galeri</a>
-                <a href="#travel"
-                    class="block py-2 text-gray-700 font-semibold text-sm hover:text-orange-500 transition duration-300">Travel</a>
-                <a href="#"
-                    class="mt-4 px-4 py-3 bg-orange-500 text-white text-center rounded-lg font-semibold text-sm hover:bg-orange-600 transition duration-300 w-full">
-                    Konsultasi Sekarang
+            class="hidden mobile-menu bg-white/95 shadow-lg transition-all duration-500 ease-in-out transform scale-95 opacity-0 -translate-y-5 rounded-b-xl">
+            <div class="flex flex-col space-y-2 py-4 px-6 text-left">
+                <a href="https://wa.me/62811917988/?text=Assalamu’alaikum. Saya ingin berkonsultasi dan menanyakan informasi lebih lanjut mengenai agen yang menangani layanan/produk ini. Mohon bantuannya. Terima kasih."
+                    class="mt-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white text-center rounded-lg font-semibold text-sm hover:from-orange-600 hover:to-yellow-500 transition duration-300 w-full shadow">
+                    Hubungi Kami
                 </a>
             </div>
         </div>
     </nav>
 
-    <section class="relative bg-cover bg-center h-[70vh] flex items-center justify-center text-center text-white" <div
-        class="relative">
-        <div style="background-image: url('images/kabah.png');" class="absolute inset-0 bg-cover bg-center"></div>
-        <div class=" bg-opacity-50 absolute inset-0"></div> <!-- Overlay -->
-        </div>
-        <div class="relative z-10 px-6 md:px-12">
-            <p class="text-sm md:text-base uppercase tracking-widest text-gray-200 mb-2 font-montserrat"
-                style="font-family: Montserrat, sans-serif;">
-                Travel Umroh Terbaik & Terpercaya
-            </p>
-            <h1 class="text-3xl md:text-5xl font-bold leading-tight">Selamat Datang di PengenUmroh.com</h1>
-            <p class="mt-4 text-lg md:text-xl font-montserrat" style="font-family: Montserrat, sans-serif;">
-                Memberikan pelayanan Terbaik demi Keamanan & Kenyamanan ibadah Anda dan Keluarga
-            </p>
-            <a href="#"
-                class="mt-6 inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
-                Konsultasi Sekarang
-            </a>
+    <!-- Hero Section -->
+    <section class="relative min-h-[40vh] flex items-center justify-center text-center text-white pt-20 pb-6 px-0 md:px-0">
+        <!-- Swiper Slider -->
+        <div class="w-full max-w-7xl">
+            <div class="swiper mySwiper rounded-2xl overflow-hidden shadow-lg aspect-[16/7] bg-gray-200">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide flex items-center justify-center">
+                        <img src="images/slider/1.png" alt="" class="w-full h-full object-cover object-center m-0 p-0">
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide flex items-center justify-center">
+                        <img src="images/slider/2.png" alt="" class="w-full h-full object-cover object-center m-0 p-0">
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide flex items-center justify-center">
+                        <img src="images/slider/3.png" alt="" class="w-full h-full object-cover object-center m-0 p-0">
+                    </div>
+                </div>
+                <!-- Pagination & Navigation -->
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next text-orange-500"></div>
+                <div class="swiper-button-prev text-orange-500"></div>
+            </div>
         </div>
     </section>
+
+    <!-- Tombol Login/Daftar -->
+    <div class="flex justify-center gap-4 mt-4 mb-4">
+        <a href="login.html"
+            id="login-button"
+            class="px-6 py-2 bg-orange-500 text-white rounded-lg font-semibold text-base shadow hover:bg-orange-600 transition duration-300">
+            Login
+        </a>
+        <a href="register.html"
+            id="register-button"
+            class="px-6 py-2 bg-yellow-400 text-white rounded-lg font-semibold text-base shadow hover:bg-yellow-500 transition duration-300">
+            Daftar
+        </a>
+    </div>
 
     <!-- Tentang -->
-
-    <section class="max-w-7xl mx-auto px-6 py-12" id="tentang">
+    <section class="max-w-7xl mx-auto px-4 py-5" id="tentang">
         <!-- Header Section -->
-        <div class="text-center mb-16">
-            <h1
+        <div class="text-center">
+            <h1 id="salam"
                 class="text-4xl font-extrabold leading-tight bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
-                Kenapa Harus Kami?
+                <span>ألسلام عليكم ورحمة الله وبركاته</span><br><span id="nama"></span>
             </h1>
-            <p class="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">
-                Kami hadir untuk memberikan pengalaman perjalanan yang nyaman, aman, dan penuh kepastian dengan layanan
-                terbaik.
-            </p>
-        </div>
-
-        <!-- Points Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Point 1 -->
-            <div
-                class="relative group bg-white shadow-lg rounded-xl p-8 text-center overflow-hidden hover:shadow-xl transition-all duration-300">
-                <div
-                    class="flex justify-center items-center w-20 h-20 bg-orange-500 text-white rounded-full mx-auto shadow-lg transform group-hover:scale-110 transition duration-300">
-                    <img src="images/tentang1.png" alt="Jaminan Keberangkatan" class="w-12 h-12">
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mt-6">Jaminan Keberangkatan</h3>
-                <p class="text-gray-600 mt-4 text-sm leading-relaxed">
-                    Kepastian keberangkatan yang transparan. Jika ada kendala dari pihak kami, uang kembali 100%.
+            <div id="text-agen">
+                <h1
+                    class="text-4xl font-extrabold leading-tight bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
+                    Kenapa Harus Menjadi Agen?
+                </h1>
+                <p class="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">
+                    Dengan menjadi agen <span style="color: #FFA500;"><b>pengen</b>umroh.com</span>, Kamu bisa bekerja secara fleksibel sesuai waktu Kamu sendiri, mendapatkan fee yang menarik dari setiap produk yang berhasil dijual, dan memanfaatkan spanduk serta banner promosi yang sudah kami sediakan. Lewat peran mulia ini, Kamu turut menyebarkan Syiar Baitullah dan, insya Allah, berkesempatan meraih hadiah istimewa berupa perjalanan ibadah Umroh.
                 </p>
-                <div
-                    class="absolute inset-x-0 bottom-0 h-1 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
-                </div>
-            </div>
-
-            <!-- Point 2 -->
-            <div
-                class="relative group bg-white shadow-lg rounded-xl p-8 text-center overflow-hidden hover:shadow-xl transition-all duration-300">
-                <div
-                    class="flex justify-center items-center w-20 h-20 bg-blue-500 text-white rounded-full mx-auto shadow-lg transform group-hover:scale-110 transition duration-300">
-                    <img src="images/tentang2.png" alt="Kemudahan Layanan" class="w-12 h-12">
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mt-6">Layanan Praktis & Nyaman</h3>
-                <p class="text-gray-600 mt-4 text-sm leading-relaxed">
-                    Dari pembuatan paspor hingga perlengkapan perjalanan, kami siapkan semua untuk Anda.
-                </p>
-                <div
-                    class="absolute inset-x-0 bottom-0 h-1 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
-                </div>
-            </div>
-
-            <!-- Point 3 -->
-            <div
-                class="relative group bg-white shadow-lg rounded-xl p-8 text-center overflow-hidden hover:shadow-xl transition-all duration-300">
-                <div
-                    class="flex justify-center items-center w-20 h-20 bg-green-500 text-white rounded-full mx-auto shadow-lg transform group-hover:scale-110 transition duration-300">
-                    <img src="images/tentang3.png" alt="Travel Terpercaya" class="w-12 h-12">
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mt-6">Travel Resmi & Terpercaya</h3>
-                <p class="text-gray-600 mt-4 text-sm leading-relaxed">
-                    Semua travel partner kami telah memiliki izin resmi dan diawasi oleh lembaga terkait.
-                </p>
-                <div
-                    class="absolute inset-x-0 bottom-0 h-1 bg-green-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
-                </div>
             </div>
         </div>
     </section>
-
     <!-- End Tentang -->
 
     <!-- PRODUK -->
-
-    <!-- Unggulan -->
-
-    <section class="max-w-7xl mx-auto px-4 py-8" id="produk">
+    <section class="max-w-7xl mx-auto px-4 py-5" id="produk">
         <!-- Header Section -->
         <div class="flex justify-between items-center mb-6">
             <div>
@@ -259,762 +148,53 @@
                 <p class="text-xs md:text-sm text-gray-600 mt-1">Temukan produk terbaik kami dengan kualitas terbaik.
                 </p>
             </div>
-            <a href="unggulan.html"
-                class="text-orange-500 font-semibold text-xs md:text-base hover:text-orange-600 transition duration-300">
-                Lihat Semua →
-            </a>
+        </div>
+
+        <!-- Search Bar & Info -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+            <div class="w-full md:w-1/2">
+                <input
+                    type="text"
+                    id="search-produk"
+                    class="w-full px-4 py-2 border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                    placeholder="Cari produk, travel, tanggal, atau harga..."
+                    autocomplete="off"
+                >
+            </div>
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <!-- Tambahkan select filter tanggal di samping search bar, sebelum #fee-filter -->
+                <select id="tanggal-filter"
+                    class="px-3 py-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:outline-none">
+                    <option value="">Filter Tanggal</option>
+                    <!-- Opsi tanggal akan diisi via JS -->
+                </select>
+                <select id="fee-filter" style="display:none"
+                    class="px-3 py-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:outline-none">
+                    <option value="" hidden>Urutkan Fee</option>
+                    <option value="desc">Fee Terbesar</option>
+                    <option value="asc">Fee Terkecil</option>
+                </select>
+                <span id="search-result-info" class="text-xs text-gray-500 ml-2"></span>
+            </div>
         </div>
 
         <!-- Product Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-5" id="product-list">
 
         </div>
+        
+        <a id="product-list-button"
+            class="text-orange-500 font-semibold text-xs md:text-base hover:text-orange-600 transition duration-300"
+            href="javascript:void(0)">
+            Lihat Semua →
+        </a>
     </section>
 
     <!-- End Unggulan -->
 
-    <!-- 9 Hari -->
-
-    <section class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Header Section -->
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1
-                    class="text-xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
-                    Umroh Reguler 9 Hari</h1>
-                <p class="text-xs md:text-sm text-gray-600 mt-1">Temukan produk terbaik kami dengan kualitas terbaik.
-                </p>
-            </div>
-            <a href="reguler9.html"
-                class="text-orange-500 font-semibold text-xs md:text-base hover:text-orange-600 transition duration-300">
-                Lihat Semua →
-            </a>
-        </div>
-
-        <!-- Product Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-        </div>
-    </section>
-
-    <!-- End 9 Hari -->
-
-    <!-- Umroh Ramadhan -->
-
-    <section class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Header Section -->
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1
-                    class="text-xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
-                    Umroh Ramadhan
-                </h1>
-                <p class="text-xs md:text-sm text-gray-600 mt-1">Temukan produk terbaik kami dengan kualitas terbaik.
-                </p>
-            </div>
-            <a href="umrohramadhan.html"
-                class="text-orange-500 font-semibold text-xs md:text-base hover:text-orange-600 transition duration-300">
-                Lihat Semua →
-            </a>
-        </div>
-
-        <!-- Product Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Umroh Hemat</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Umroh</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 20.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-        </div>
-    </section>
-
-    <!-- End Umroh Ramadhan -->
-
-    <!-- Haji Khusus -->
-
-    <section class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Header Section -->
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1
-                    class="text-xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
-                    Haji Khusus
-                </h1>
-                <p class="text-xs md:text-sm text-gray-600 mt-1">Temukan produk terbaik kami dengan kualitas terbaik.
-                </p>
-            </div>
-            <a href="hajikhusus.html"
-                class="text-orange-500 font-semibold text-xs md:text-base hover:text-orange-600 transition duration-300">
-                Lihat Semua →
-            </a>
-        </div>
-
-        <!-- Product Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-            <!-- Card -->
-            <a href="produk.html" class="block no-underline text-inherit">
-                <div
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.03] transition duration-300">
-                    <img src="images/produk1.jpg" alt="Produk 1" class="w-full h-32 md:h-48 object-cover">
-                    <div class="p-3 md:p-4">
-                        <!-- Nama Paket -->
-                        <h3 class="text-xs md:text-base font-semibold text-gray-800">Paket Haji Spesial</h3>
-
-                        <!-- Nama Hotel & Bintang -->
-                        <div class="flex flex-wrap items-center text-[10px] md:text-sm text-gray-600 mt-1 md:mt-2">
-                            <span class="font-medium">Hotel:</span>
-                            <span class="ml-1 text-gray-800 font-semibold">Makkah Tower</span>
-                            <span class="ml-2 text-yellow-400">⭐⭐⭐⭐</span>
-                        </div>
-
-                        <!-- Maskapai -->
-                        <div class="flex items-center mt-1 md:mt-2">
-                            <span class="text-[10px] md:text-sm text-gray-600 font-medium">Maskapai:</span>
-                            <img src="images/maskapai.png" alt="Garuda Indonesia" class="w-8 md:w-12 h-4 md:h-6 ml-2">
-                        </div>
-
-                        <!-- Informasi Kecil -->
-                        <div class="flex flex-wrap justify-start md:justify-center gap-1 md:gap-2 mt-2 md:mt-3">
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Haji</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">9
-                                Hari</span>
-                            <span
-                                class="bg-gray-100 text-[10px] md:text-xs text-gray-700 px-3 py-[4px] rounded-full text-center">Termasuk
-                                Visa</span>
-                        </div>
-
-                        <!-- Harga -->
-                        <p
-                            class="text-sm md:text-lg font-extrabold bg-gradient-to-r from-orange-500 to-red-500 text-transparent bg-clip-text mt-3 md:mt-4">
-                            Rp 212.000.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-
-    </section>
-
-    <!-- End Haji Khusus -->
-
     <!-- END PRODUK -->
 
-    <!-- Galeri -->
-
-    <section class="max-w-7xl mx-auto px-6 py-12" id="galeri">
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1
-                    class="text-xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
-                    Galeri
-                </h1>
-                <p class="text-xs md:text-sm text-gray-700 mt-1">
-                    Lihat pengalaman pelanggan kami yang puas dengan layanan terbaik.
-                </p>
-            </div>
-            <a href="galeri.html"
-                class="text-orange-500 font-semibold text-xs md:text-base hover:text-yellow-500 transition duration-300">
-                Lihat Semua →
-            </a>
-        </div>
-
-
-        <!-- Gallery Section -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Image 1 -->
-            <div class="relative overflow-hidden rounded-lg shadow-lg">
-                <img src="images/galeri/galeri1.png" alt="Testimoni 1"
-                    class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-            </div>
-            <!-- Image 2 -->
-            <div class="relative overflow-hidden rounded-lg shadow-lg">
-                <img src="images/galeri/galeri2.png" alt="Testimoni 2"
-                    class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-            </div>
-            <!-- Image 3 -->
-            <div class="relative overflow-hidden rounded-lg shadow-lg">
-                <img src="images/galeri/galeri3.png" alt="Testimoni 3"
-                    class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-            </div>
-            <!-- Image 4 -->
-            <div class="relative overflow-hidden rounded-lg shadow-lg">
-                <img src="images/galeri/galeri4.png" alt="Testimoni 4"
-                    class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-            </div>
-        </div>
-    </section>
-
-    <!-- End Galeri -->
-
-    <!-- Mitra travel -->
-
-    <section class="max-w-7xl mx-auto px-6 py-12 mb-8" id="travel">
-        <!-- Header Section -->
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1
-                    class="text-xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-yellow-400 text-transparent bg-clip-text">
-                    Mitra Travel Kami
-                </h1>
-                <p class="text-xs md:text-sm text-gray-700 mt-1">
-                    Kami bekerja sama dengan berbagai travel terpercaya untuk perjalanan terbaik Anda.
-                </p>
-            </div>
-            <a href="travel.html"
-                class="text-orange-500 font-semibold text-xs md:text-base hover:text-yellow-500 transition duration-300">
-                Lihat Semua →
-            </a>
-        </div>
-
-        <!-- Travel Vendor List -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="travel-body">
-            <!-- Travel 1 -->
-            <a href="haramainku.html"
-                class="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center hover:scale-105 transition-transform duration-300">
-                <img src="images/travel/travel1.png" alt="Travel 1" class="w-20 h-20 object-cover mb-3">
-                <h2 class="text-lg font-semibold text-gray-800">HaramainKU</h2>
-                <div class="flex mt-2">⭐⭐⭐⭐⭐</div>
-            </a>
-        </div>
-    </section>
-
-    <!-- End Mitra travel -->
-
-    <!-- Lowongan -->
-
-    <section class="max-w-8xl mx-auto px-4 py-12 text-center bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg">
-        <h2 class="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
-            🚀 Lowongan Kerja di PengenUmroh.com
-        </h2>
-        <p class="mt-4 text-white text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Bergabunglah dengan tim kami dan kembangkan karir yang luar biasa!
-        </p>
-
-        <div class="mt-6">
-            <a href="https://karir.pengenumroh.com/"
-                class="inline-flex items-center px-6 py-2 bg-white text-orange-600 text-base font-semibold rounded-full shadow-md hover:bg-orange-100 transition duration-300 ease-in-out transform hover:scale-105">
-                ✨ Apply Sekarang
-            </a>
-        </div>
-    </section>
-
-    <!-- End Lowongan -->
-
-    <footer class="bg-[#111723] text-white dark:bg-[#111723]">
+    <footer class="bg-[#111723] text-white dark:bg-[#111723] mt-6 pt-6 pb-3">
         <div class="container px-6 py-6 mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                 <!-- Bagian Logo dan Deskripsi -->
@@ -1060,14 +240,6 @@
                                 Privacy Policy
                             </a>
                         </div>
-
-                        <div class="flex flex-col items-center">
-                            <h3 class="uppercase">Join Mitra Travel</h3>
-                            <button onclick="window.location.href='#'"
-                                class="mt-2 text-sm text-white bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-md focus:outline-none">
-                                Bergabung Sekarang
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1080,64 +252,105 @@
         </div>
     </footer>
 
+    <!-- Modal Preview Gambar -->
+    <div id="img-preview-modal"
+     class="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-md transition-all duration-300 hidden"
+     onclick="closeImgPreview(event)">
+        <div class="relative bg-transparent flex flex-col items-center" onclick="event.stopPropagation()">
+            <button onclick="closeImgPreview()" class="absolute top-2 right-2 bg-white rounded-full p-1 shadow hover:bg-orange-500 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <img id="img-preview-modal-img" src="" alt="Preview" class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg border-4 border-white">
+            <a id="img-preview-download" href="#" download class="mt-4 px-6 py-2 bg-orange-500 text-white rounded-lg font-bold hover:bg-orange-600 transition inline-block" style="display: none;">
+                Download Gambar
+            </a>
+        </div>
+    </div>
+    <!-- Akhir Modal Preview Gambar -->
+
+     <!-- Modal Profile -->
+    <div id="profile-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden"
+     onclick="closeProfileModal()">
+  <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-sm relative flex flex-col items-center"
+       onclick="event.stopPropagation()">
+    <button onclick="closeProfileModal()" class="absolute top-3 right-3 bg-gray-100 hover:bg-orange-500 hover:text-white rounded-full p-2 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="flex flex-col items-center gap-2 mt-2">
+      <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center text-3xl text-orange-500 font-bold mb-2">
+        <span id="profile-avatar">A</span>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800" id="profile-nama">Nama Agen</h2>
+      <p class="text-sm text-gray-500" id="profile-telepon">No. Telepon</p>
+      <div class="mt-4 w-full flex flex-col items-center">
+        <span class="text-xs text-gray-400">Saldo Anda</span>
+        <span class="text-2xl font-extrabold text-green-600" id="profile-saldo">Rp 0</span>
+        <button id="history-transaksi-btn"
+        class="mt-3 px-4 py-2 bg-gray-200 text-orange-600 rounded-lg font-semibold text-sm hover:bg-orange-500 hover:text-white transition">
+        History Transaksi
+      </button>
+      </div>
+      <!-- Tombol Ajukan Pencairan Fee -->
+      <button id="ajukan-pencairan-btn"
+        class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold text-sm hover:bg-orange-600 transition">
+        Ajukan Pencairan Fee
+      </button>
+      <!-- Form input pencairan, hidden awalnya -->
+      <div id="form-pencairan-fee" class="w-full flex flex-col items-center mt-3 hidden">
+        <input type="text" id="jumlah-pencairan" min="1"
+            class="w-full px-4 py-2 border border-orange-300 rounded-lg text-center text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none mb-2"
+            placeholder="Masukkan nominal pencairan" autocomplete="off">
+        <span id="pencairan-error" class="text-xs text-red-500 mb-2 hidden"></span>
+        
+        <!-- Tambahan input rekening -->
+        <div class="w-full flex flex-col gap-2 mb-2">
+            <input type="text" id="no-rekening"
+                class="w-full px-4 py-2 border border-orange-300 rounded-lg text-center text-base focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                placeholder="Nomor Rekening" autocomplete="off">
+            <input type="text" id="nama-bank"
+                class="w-full px-4 py-2 border border-orange-300 rounded-lg text-center text-base focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                placeholder="Nama Bank" autocomplete="off">
+            <input type="text" id="nama-rekening"
+                class="w-full px-4 py-2 border border-orange-300 rounded-lg text-center text-base focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                placeholder="Nama Pemilik Rekening" autocomplete="off">
+        </div>
+        
+        <button id="kirim-pencairan-btn"
+            class="px-4 py-2 mt-3 bg-green-600 text-white rounded-lg font-semibold text-sm hover:bg-green-700 transition">
+            Kirim Permintaan
+        </button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal History Transaksi -->
+<div id="history-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden" onclick="closeHistoryModal(event)">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg relative flex flex-col items-center" onclick="event.stopPropagation()">
+        <button onclick="closeHistoryModal()" class="absolute top-3 right-3 bg-gray-100 hover:bg-orange-500 hover:text-white rounded-full p-2 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">History Transaksi</h2>
+        <div id="history-list" class="w-full max-h-[60vh] overflow-y-auto">
+            <div class="text-center text-gray-400 py-8">Memuat data...</div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 <!-- Script -->
-<script src="assets/js/api/travel.fetch.js"></script>
-
+<script src="assets/js/api/fetch_data_produk.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
-<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-<!-- JavaScript for Mobile Menu & Cart -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const menuBtn = document.querySelector(".mobile-menu-button");
-        const menu = document.querySelector(".mobile-menu");
-        const cartBtn = document.getElementById("cartButton");
-        const cartDropdown = document.getElementById("cartDropdown");
-
-        // Toggle Mobile Menu
-        if (menuBtn && menu) {
-            menuBtn.addEventListener("click", () => {
-                if (menu.classList.contains("hidden")) {
-                    menu.classList.remove("hidden");
-                    setTimeout(() => {
-                        menu.classList.remove("opacity-0", "scale-95", "-translate-y-5");
-                        menu.classList.add("opacity-100", "scale-100", "translate-y-0");
-                    }, 10);
-                } else {
-                    menu.classList.remove("opacity-100", "scale-100", "translate-y-0");
-                    menu.classList.add("opacity-0", "scale-95", "-translate-y-5");
-                    setTimeout(() => {
-                        menu.classList.add("hidden");
-                    }, 300);
-                }
-            });
-        }
-
-        // Toggle Cart Dropdown
-        if (cartBtn && cartDropdown) {
-            cartBtn.addEventListener("click", () => {
-                cartDropdown.classList.toggle("hidden");
-            });
-        }
-    });
-</script>
-
-<!-- Swiper JS -->
-<script>
-    var swiper = new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
-</script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="assets/js/script.js"></script>
 </html>
